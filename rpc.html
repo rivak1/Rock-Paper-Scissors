@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+	body{
+		background-color: #f1f1f1;
+	}
+		#game{
+			
+			height: 400px;
+			width: 500px;
+			left: 30%;
+			border-bottom:4px solid green;
+			position: relative;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+		input{
+			transition: 2s;
+			border-left: 4px solid green;
+			cursor: pointer;
+		}
+		input:hover{
+			transform: scale(1.1);
+		}
+		#game:before{
+			content: 'Enter Any value Rock Paper Sessors';
+			font-size:30px;
+		}
+		button{
+			float: left;
+			padding: 40px;
+			margin:20px;
+			font-size: 20px;
+			color: white;
+			background-color: blue;
+		}
+		label{
+			color: blue;
+			font-size: 30px;
+			font-family: fantasy;
+		}
+		.score ul li{
+			display: inline-block;
+			padding:20px;
+			list-style: none;
+			background-color: green;
+			color: white;
+
+		}
+	</style>
+	<title>Rock Paper scissors</title>
+</head>
+<body>
+	<div id="win">
+		
+	</div>
+<div id="game">
+
+</div>
+<div class="score">
+	<ul>
+		<li id='scoreuser'><h5>User:</h5>0</li>
+		<li id="scorecomputer"><h5>Computer:</h5>0</li>
+	</ul>
+	<h4>Wining Score:10</h4>
+</div>
+<!-- <label>Your Choice:</label>
+<input type="text" id="user" placeholder="Enter Rock , Paper Or Sessors">
+
+ -->
+ <br><br><br>
+<input class="start" type="image" name="image" src="1.png" value="rock" height="200" width="200">
+&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+<input class="start" type="image" name="image" src="2.png" value="paper" height="200" width="200">
+&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+<input class="start" type="image" name="image" src="3.png" value="scissors" height="200" width="200">
+<button id="stop" type="button">Stop</button>
+<!-- <button id="start" type="button">Start</button> -->
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script type="text/javascript">
+	var c=0;
+	var i=1;
+	var value=1;
+	var check= new Array();
+	var inc=0;
+	window.user=0;
+	window.Computer=0;
+	window.uservalue='';
+	 // random=Math.round(random)
+	 function getrandom(){	
+
+			val= Math.ceil(Math.random()*3);
+			//alert(check+'f')
+			if(check.indexOf(val) != -1)
+			{
+				return getrandom();
+			}
+			else{
+				check.splice(0,check.length);
+				check.push(val)
+			
+				return val;
+			}
+
+		}
+	function showTime(){
+		var win=''
+		if(i==4){
+			i=1;
+		}
+		$('#game').css('background-image','url('+i+'.png)')
+		i=i+1;
+		c=c+1;
+		if(c==14)
+		{
+		  // $('#game').css('background-image','url('+c+'.png)')
+		   var random = getrandom();
+		  // alert(random+'r')
+		  //alert(window.uservalue)
+		   $('#win').html('<h1>Winner Is</h1>')
+		  if((window.uservalue=='rock' && random==1) || (window.uservalue=='paper' && random==2) ||(window.uservalue=='scissors' && random==3))
+		  	{
+		  		$('#win').html('<h1>OOOWWWWWW Match is Draw</h1>');
+		  		$('#game').css('background-image','url('+random+'.png)')
+		  		c=0
+		  		i=1
+		  		value=1;
+		  		clearInterval(myVar);
+		  		window.user=window.user+1
+		  		window.Computer=window.Computer+1
+		    }
+		  else{
+		  			//alert(window.uservalue)
+		  		if((window.uservalue=='rock' && random==3) ){
+		  			win='user'
+		 		 }
+				else if((window.uservalue=='paper' && random==1) ){
+					win='user'
+				  }
+				else if((window.uservalue=='scissors' && random==2) ){
+					win='user'
+				}
+				else
+				{
+				 	win='computer'
+		  		}
+		  		//alert(win)
+		  		//alert(random)
+		  		//alert(window.uservalue)
+		  		if(win=='user'){
+		  			$('#game').css('background-image','url('+random+'.png)')
+				  	$('#win').html('<h1>Sadeeeee Computer Loss the Math</h1>');
+				  	window.user=window.user+1;
+					window.Computer=window.Computer-1;
+		  		}
+		  		else{
+		  			$('#game').css('background-image','url('+random+'.png)')
+		  			$('#win').html('<h1>hurre...! Computer win the Math</h1>');
+		  			window.user=window.user-1;
+					window.Computer=window.Computer+1;
+		  		}
+		  		c=0
+		  		i=1
+		  		clearInterval(myVar);	
+		  		value=1;
+		  	}
+		  	$('#scoreuser').text('User:'+window.user);
+			$('#scorecomputer').text('Computer:'+window.Computer);
+		}
+    }
+
+    function winner(user,computer){
+    	if(user==10){
+    		alert('Winner is User With Score:->'+user)
+    		clearInterval(myVar);
+    		window.location='rpc.html';
+
+    	}
+    	else{
+    		alert('Winner is Computer With Score:->'+computer)
+    		clearInterval(myVar);
+    		window.location='rpc.html';
+    	}
+    }
+
+	$(document).ready(function(){
+  $(".start").click(function(){
+  	if(value==1){
+  		console.log(typeof $(this).children().val());
+  	if(typeof $(this).val()== 'string' && $(this).val()!=''){
+  		window.uservalue=$(this).val();
+  		//alert(window.uservalue)
+		if(typeof window.uservalue == 'string'){
+			window.uservalue=window.uservalue.toLowerCase();
+			if(window.uservalue == "rock" || window.uservalue == "paper" || window.uservalue=="scissors"){
+				value=2;
+				myVar = setInterval("showTime()", 300);
+				if(window.user==10||window.Computer==10){
+					winner(window.user,window.Computer);
+				}
+			}
+			else{alert('Please Enter Valid Value')}
+		}
+  	}
+  	else{
+  		alert('please Enter  valid Value')
+  	}
+  	}
+  	else{
+  		alert('Please Wait I am Not super Computer')
+  	}
+  });
+
+  $("#stop").click(function(){
+ 	clearInterval(myVar);
+ 	c=0;
+ 	i=1;
+ 	value=1
+  });
+});
+</script>
+</html>
